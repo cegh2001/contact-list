@@ -1,27 +1,62 @@
 let listaDeContactos = [
-  { nombre: "Juancito Villa", telefono: "0000" },
-  { nombre: "Marta Casona", telefono: "1111" },
+  {
+    id: 1,
+    nombres: "Juancito",
+    apellidos: "Villa",
+    telefono: "0000",
+    ubicaciones: [
+      {
+        ciudad: "Ciudad",
+        dirección: "Calle",
+      },
+    ],
+  },
+  {
+    id: 2,
+    nombres: "Marta",
+    apellidos: "Casona",
+    telefono: "1111",
+    ubicaciones: [
+      {
+        ciudad: "Ciudad1",
+        dirección: "Avenida1",
+      },
+    ],
+  },
 ];
 
 function agregarContacto() {
-  let nombre = prompt("Ingresa el nombre del nuevo contacto:");
+  let id = listaDeContactos.length + 1; // Genera un nuevo ID.
+  let nombres = prompt("Ingresa los nombres del nuevo contacto:");
+  let apellidos = prompt("Ingresa los apellidos del nuevo contacto:");
   let telefono = prompt("Ingresa el número de teléfono del nuevo contacto:");
-  let nuevoContacto = { nombre, telefono };
+  let ciudad = prompt("Ingresa la ciudad del nuevo contacto:");
+  let dirección = prompt("Ingresa la dirección del nuevo contacto:");
+
+  let nuevoContacto = {
+    id,
+    nombres,
+    apellidos,
+    telefono,
+    ubicaciones: [{ ciudad, dirección }],
+  };
+
   listaDeContactos.push(nuevoContacto);
-  console.log(`Contacto "${nombre}" agregado.`);
+  console.log(`Contacto "${nombres} ${apellidos}" agregado.`);
 }
 
 function borrarContacto() {
   let nombre = prompt("Ingresa el nombre del contacto que deseas borrar:");
   let indice = -1;
   for (let i = 0; i < listaDeContactos.length; i++) {
-    if (listaDeContactos[i].nombre === nombre) {
+    if (listaDeContactos[i].nombres === nombre) {
+      // Corregido: Cambiado `listaDeContactos[i].nombre` a `listaDeContactos[i].nombres`.
       indice = i;
       break;
     }
   }
   if (indice !== -1) {
-    let nombreBorrado = listaDeContactos[indice].nombre;
+    let nombreBorrado = listaDeContactos[indice].nombres;
     listaDeContactos.splice(indice, 1);
     console.log(`Contacto "${nombreBorrado}" borrado.`);
   } else {
@@ -32,7 +67,9 @@ function borrarContacto() {
 function imprimirContactos() {
   console.log("Lista de Contactos:");
   listaDeContactos.forEach((contacto) => {
-    console.log(`Nombre: ${contacto.nombre}, Teléfono: ${contacto.telefono}`);
+    console.log(
+      `Apellido: ${contacto.apellidos}, Nombre: ${contacto.nombres}, Teléfono: ${contacto.telefono}`
+    );
   });
 }
 
