@@ -50,7 +50,6 @@ function borrarContacto() {
   let indice = -1;
   for (let i = 0; i < listaDeContactos.length; i++) {
     if (listaDeContactos[i].nombres === nombre) {
-      // Corregido: Cambiado `listaDeContactos[i].nombre` a `listaDeContactos[i].nombres`.
       indice = i;
       break;
     }
@@ -59,6 +58,34 @@ function borrarContacto() {
     let nombreBorrado = listaDeContactos[indice].nombres;
     listaDeContactos.splice(indice, 1);
     console.log(`Contacto "${nombreBorrado}" borrado.`);
+  } else {
+    console.log(`No se encontró un contacto con el nombre "${nombre}".`);
+  }
+}
+
+function actualizarContacto() {
+  let nombre = prompt("Ingresa el nombre del contacto que deseas actualizar:");
+  let indice = -1;
+  for (let i = 0; i < listaDeContactos.length; i++) {
+    if (listaDeContactos[i].nombres === nombre) {
+      indice = i;
+      break;
+    }
+  }
+  if (indice !== -1) {
+    let nuevoNombre = prompt("Ingresa el nuevo nombre:");
+    let nuevoApellido = prompt("Ingresa el nuevo apellido:");
+    let nuevoTelefono = prompt("Ingresa el nuevo número de teléfono:");
+    let nuevaCiudad = prompt("Ingresa la nueva ciudad:");
+    let nuevaDireccion = prompt("Ingresa la nueva dirección:");
+
+    listaDeContactos[indice].nombres = nuevoNombre;
+    listaDeContactos[indice].apellidos = nuevoApellido;
+    listaDeContactos[indice].telefono = nuevoTelefono;
+    listaDeContactos[indice].ubicaciones[0].ciudad = nuevaCiudad;
+    listaDeContactos[indice].ubicaciones[0].dirección = nuevaDireccion;
+
+    console.log(`Contacto "${nombre}" actualizado.`);
   } else {
     console.log(`No se encontró un contacto con el nombre "${nombre}".`);
   }
@@ -75,17 +102,23 @@ function imprimirContactos() {
 
 while (true) {
   let opcion = prompt(
-    "¿Quieres crear un nuevo contacto (c) o borrar un contacto existente (b)? Ingresa 'c' o 'b'. Para salir, presiona Cancelar."
+    "¿Quieres mostrar la lista de contactos (m), crear un nuevo contacto (c), borrar un contacto existente (b) o actualizar un contacto (a)? Ingresa 'c', 'b' o 'a'. Para salir, presiona Cancelar."
   );
 
   if (opcion === null) {
     break;
+  } else if (opcion === "m") {
+    imprimirContactos();
   } else if (opcion === "c") {
     agregarContacto();
   } else if (opcion === "b") {
     borrarContacto();
+  } else if (opcion === "a") {
+    actualizarContacto();
   } else {
-    alert("Opción no válida. Ingresa 'c' para crear o 'b' para borrar.");
+    alert(
+      "Opción no válida. Ingresa 'c' para crear, 'b' para borrar o 'a' para actualizar."
+    );
   }
 }
 
